@@ -29,20 +29,6 @@ void setup() {
   Serial.begin(9600);
 }
 
-/*
-void loop(){
-  digitalWrite(LFWD, HIGH);
-  digitalWrite(LBCK, LOW);
-  analogWrite(LEN, 255);
-  digitalWrite(RFWD, HIGH);
-  digitalWrite(RBCK, LOW);
-  analogWrite(REN, 255);
-  digitalWrite(LED1, HIGH);
-  digitalWrite(LED2, HIGH);
-}
-*/
-
-
 void loop() {
   if (vw_get_message(buf, (uint8_t*)BUFLEN)){
     xVal = buf[0];
