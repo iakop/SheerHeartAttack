@@ -28,36 +28,29 @@ void setup() {
   vw_rx_start();
   motorInit();
   ledInit();
+  randomSeed(analogRead(A2));
   #ifdef SERIAL_DEBUG
     Serial.begin(9600);
   #endif
 }
 
 void loop() {
-  mesgUpdate();
+  // mesgUpdate();
 
-  // Since 
-  xGlobal = xVal-128;
-  if(xGlobal < -127)
-    xGlobal = -127;
-  else if(xGlobal > 127)
-    xGlobal = 127;
-  yGlobal = yVal-128;
-  if(yGlobal < -127)
-    yGlobal = -127;
-  else if(yGlobal > 127)
-    yGlobal = 127;
+  delay(2000);
+  
+  leftDrive = random(0,255);
+  rightDrive = random(0,255);
 
-  #ifdef SERIAL_DEBUG
-      Serial.print("xGlobal = "); Serial.print(xGlobal); Serial.print("yGlobal = "); Serial.println(yGlobal);
-  #endif
-
-  // Left motor = K x (Front_Back + Left_Right)
-  // Right motor = K x (Front_Back - Left_Right)
-  // Use these Formulae, and map them to the motorSpeeds API:
-  leftDrive = map((yGlobal + xGlobal), -128, 128, -255, 255);
-  rightDrive = map((yGlobal- xGlobal), -128, 128, -255, 255);
-
+  if(leftDrive > 150 && rightDrive > 150){
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+  }
+  else{
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, LOW);
+  }
+  
   // Set the motor Speeds using the motorSpeeds function:
   motorSpeeds(leftDrive, rightDrive);
 }
